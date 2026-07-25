@@ -100,7 +100,7 @@ func (t *Tinymix) init() error {
 				return fmt.Errorf("tinymix: failed to process mixer header: len(kv) == %d", len(kv))
 			}
 			key := kv[0]
-			val := kv[1]
+			val := strings.TrimSpace(kv[1])
 			val = strings.TrimPrefix(val, "'")
 			val = strings.TrimSuffix(val, "'")
 			if key == "Mixer name" && t.mixers != nil {
@@ -314,7 +314,7 @@ func (a *TinymixArg) SetValue(set string) error {
 			return fmt.Errorf("tinymix: control %d: failed to set %s: %v", a.Control, set, err)
 		}
 	case "BYTE":
-		return fmt.Errorf("tinymix: control %d: setting bytes is not yet supported")
+		return fmt.Errorf("tinymix: control %d: setting bytes is not yet supported", a.Control)
 	}
 	a.Value = set
 	return nil
